@@ -33,13 +33,16 @@ app.use(session({
 app.use(csrfProtection);
 app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
+    res.locals._path = req.path;
     next();
 });
 
 const errorController = require('./controllers/error');
 const homeRoutes = require('./routes/home');
+const authRoutes = require('./routes/auth');
 
 app.use(homeRoutes);
+app.use(authRoutes);
 app.use(errorController.get404);
 
 app.listen(process.env.PORT || 8080);

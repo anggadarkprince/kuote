@@ -1,20 +1,26 @@
 <header>
     <div class="container-fluid position-relative no-side-padding">
 
-        <a href="#" class="logo"><img src="/img/logo.png" alt="Kuote"></a>
+        <a href="/" class="logo"><img src="/img/logo.png" alt="Kuote"></a>
 
         <div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
         <ul class="main-menu visible-on-click" id="main-menu">
-            <li><a href="/quote-of-the-day">Quote of the Day</a></li>
-            <li><a href="/most-popular">Most Popular</a></li>
-            <li><a href="/login">Account</a></li>
+            <li class="<%= _path == '/quote-of-the-day' ? 'active' : '' %>">
+                <a href="/quote-of-the-day">Quote of the Day</a>
+            </li>
+            <li class="<%= _path == '/most-popular' ? 'active' : '' %>">
+                <a href="/most-popular">Most Popular</a>
+            </li>
+            <li class="<%= _path == '/login' || _path == '/register' ? 'active' : '' %>">
+                <a href="/login">Account</a>
+            </li>
         </ul>
 
         <div class="src-area">
-            <form>
+            <form action="/search">
                 <button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
-                <input class="src-input" type="text" placeholder="Type of search">
+                <input class="src-input" name="q" type="text" placeholder="Type of search">
             </form>
         </div>
     </div>

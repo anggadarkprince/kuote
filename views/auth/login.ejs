@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../components/header') %>
+</head>
+<body>
+<%- include('../components/navigation') %>
+
+<section class="blog-area section">
+    <div class="container">
+        <div class="col-sm-4 mx-auto">
+            <h3>Login</h3>
+            <p class="text-muted">Sign in to your dashboard</p>
+            <div class="card-box">
+                <form method="post">
+                    <input type="text" name="username" class="form-control" placeholder="Email or username">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <button class="btn-block submit-btn mb-3" type="submit" id="form-submit">LOGIN</button>
+                    <a href="/register">Don't have account? Register</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer') %>
+</body>
+</html>
