@@ -36,11 +36,10 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res, next) => {
-    res.send('hello');
-});
-
 const errorController = require('./controllers/error');
+const homeRoutes = require('./routes/home');
+
+app.use(homeRoutes);
 app.use(errorController.get404);
 
 app.listen(process.env.PORT || 8080);

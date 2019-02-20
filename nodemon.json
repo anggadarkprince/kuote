@@ -4,6 +4,6 @@
     "DB_HOSTNAME": "localhost",
     "DB_USERNAME": "angga",
     "DB_PASSWORD": "angga",
-    "DB_NAME": "kuote",
+    "DB_NAME": "kuote"
   }
 }
