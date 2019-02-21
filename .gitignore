@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
+!logs/.gitkeep
 logs
 *.log
 npm-debug.log*
@@ -76,6 +77,3 @@ typings/
 
 .idea
 .vscode
-
-logs/*
-!logs/.gitkeep
