@@ -10,11 +10,14 @@ const compression = require('compression');
 const morgan = require('morgan');
 
 const User = require('./models/user');
+const Session = require('./models/session');
 const errorController = require('./controllers/error');
 const homeRoutes = require('./routes/home');
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
+const quoteRoutes = require('./routes/quote');
 const authMiddleware = require('./middleware/must-authenticated');
+const db = require('./utils/database');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -29,10 +32,15 @@ app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 app.use(session({
     secret: 'secret-session-key',
     resave: false,
     saveUninitialized: false,
+    store: new SequelizeStore({
+        db: db,
+        table: 'session'
+    }),
 }));
 app.use(flash());
 
@@ -63,9 +71,9 @@ app.use((req, res, next) => {
 app.use(homeRoutes);
 app.use(authRoutes);
 app.use(authMiddleware, dashboardRoutes);
+app.use('/quotes', quoteRoutes);
 app.use(errorController.get404);
 
-const db = require('./utils/database');
 db.sync({force: false})
     .then(result => {
         app.listen(process.env.PORT || 8080);

@@ -9,8 +9,22 @@
 <section class="blog-area section">
     <div class="container">
 
-        <h3>Dashboard</h3>
+        <h3 class="mb-3">Dashboard</h3>
 
+        <a href="/quotes/create" class="btn btn-primary mb-3">Create Quote</a>
+
+        <% if(quotes.length > 0) { %>
+            <% for (let quote of quotes) { %>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100">
+                        <%- include('../quote/_simple') %>
+                        <%- include('../quote/_simple') %>
+                    </div>
+                </div>
+            <% } %>
+        <% } else { %>
+            <p>No quotes available!</p>
+        <% } %>
     </div>
 </section>
 
