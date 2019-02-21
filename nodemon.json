@@ -2,8 +2,8 @@
   "env": {
     "PORT": 8080,
     "DB_HOSTNAME": "localhost",
-    "DB_USERNAME": "angga",
-    "DB_PASSWORD": "angga",
+    "DB_USERNAME": "root",
+    "DB_PASSWORD": "",
     "DB_NAME": "kuote"
   }
 }

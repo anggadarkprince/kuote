@@ -15,20 +15,20 @@ const User = db.define('user', {
     username: {
         type: Sequelize.STRING(30),
         allowNull: false,
+    },
+    email: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
         validate: {
             notEmpty: true,
             isEmail: true,
         }
     },
-    email: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-    },
     password: {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    states: {
+    status: {
         type:   Sequelize.ENUM,
         values: ['active', 'pending', 'suspended'],
         defaultValue: 'pending'

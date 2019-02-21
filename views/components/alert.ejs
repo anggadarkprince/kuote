@@ -1,0 +1,11 @@
+<% if(typeof _flashSuccess != "undefined" && _flashSuccess.length) { %>
+<div class="alert alert-success" role="alert">
+    <%= _flashSuccess %>
+</div>
+<% } %>
+
+<% if(typeof _flashError != "undefined" && _flashError.length) { %>
+<div class="alert alert-danger" role="alert">
+    <%= _flashError %>
+</div>
+<% } %>

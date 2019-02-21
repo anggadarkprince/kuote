@@ -12,12 +12,18 @@
             <h3>Register</h3>
             <p class="text-muted">Create new account</p>
             <div class="card-box">
-                <form method="post">
-                    <input type="text" name="name" class="form-control" placeholder="Your full name">
-                    <input type="text" name="username" class="form-control" placeholder="Username">
-                    <input type="email" name="email" class="form-control" placeholder="Email address">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                    <input type="password" name="confirm_password" class="form-control" placeholder="Repeat your password">
+                <form action="/register" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="text" name="name" class="form-control"
+                           placeholder="Your full name" required maxlength="50">
+                    <input type="text" name="username" class="form-control"
+                           placeholder="Username" required maxlength="50">
+                    <input type="email" name="email" class="form-control"
+                           placeholder="Email address" required maxlength="50">
+                    <input type="password" name="password" class="form-control"
+                           placeholder="Password" required maxlength="50">
+                    <input type="password" name="confirm_password" class="form-control"
+                           placeholder="Repeat your password" maxlength="50">
                     <button class="btn-block submit-btn mb-3" type="submit" id="form-submit">REGISTER</button>
                     <a href="/login">Register already? Login here</a>
                 </form>
