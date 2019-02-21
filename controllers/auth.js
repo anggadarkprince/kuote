@@ -36,7 +36,7 @@ const postLogin = (req, res) => {
     if(re.test(String(username).toLowerCase())) {
         condition = {email: username};
     }
-console.log(condition);
+
     User.findOne({where: condition})
         .then(user => {
             console.log(user);

@@ -9,8 +9,12 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 
-
-const csrfProtection = csrf({sessionKey: 'session'});
+const User = require('./models/user');
+const errorController = require('./controllers/error');
+const homeRoutes = require('./routes/home');
+const authRoutes = require('./routes/auth');
+const dashboardRoutes = require('./routes/dashboard');
+const authMiddleware = require('./middleware/must-authenticated');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -32,23 +36,33 @@ app.use(session({
 }));
 app.use(flash());
 
+const csrfProtection = csrf({sessionKey: 'session'});
 app.use(csrfProtection);
+
+app.use((req, res, next) => {
+    if (!req.session.userId) {
+        return next();
+    }
+    User.findById(req.session.userId)
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(console.log);
+});
+
 app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     res.locals._path = req.path;
     res.locals._flashSuccess = req.flash('success');
     res.locals._flashError = req.flash('error');
+    res.locals.isAuthenticated = req.session.isLoggedIn;
     next();
 });
 
-const errorController = require('./controllers/error');
-const homeRoutes = require('./routes/home');
-const authRoutes = require('./routes/auth');
-const dashboardRoutes = require('./routes/dashboard');
-
 app.use(homeRoutes);
 app.use(authRoutes);
-app.use(dashboardRoutes);
+app.use(authMiddleware, dashboardRoutes);
 app.use(errorController.get404);
 
 const db = require('./utils/database');
