@@ -17,9 +17,17 @@ const Quote = db.define('quote', {
             key: 'id'
         }
     },
-    quote: {
-        type: Sequelize.STRING(200),
+    author: {
+        type: Sequelize.STRING(50),
         allowNull: false,
+    },
+    quote: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
+    },
+    featured: {
+        type: Sequelize.STRING(500),
+        allowNull: true,
     },
     description: {
         type: Sequelize.TEXT,
@@ -30,7 +38,8 @@ const Quote = db.define('quote', {
     },
     views: {
         type: Sequelize.INTEGER,
-        default: 0,
+        allowNull: false,
+        defaultValue: 0,
         validate: {
             min: 0
         }

@@ -1,4 +1,6 @@
-const Quote = require('../models/quotes');
+const Quote = require('../models/quote');
+const QuoteTag = require('../models/quote-tag');
+const Tag = require('../models/tag');
 const db = require('../utils/database');
 
 const index = (req, res, next) => {
@@ -17,10 +19,45 @@ const index = (req, res, next) => {
 };
 
 const createQuote = (req, res, next) => {
-
+    res.render('quote/create', {
+        title: 'Create new quote',
+    });
 }
-const saveQuote = (req, res, next) => {
 
+const saveQuote = (req, res, next) => {
+    const featured = req.file;
+    const {author, quote, category, description} = req.body;
+    const categories = category.split(',');
+
+    let createdQuote = null;
+    Quote.create({user_id: req.user.id, author, quote, featured: featured.path, description})
+        .then(quoteObj => {
+            createdQuote = quoteObj;
+            const findExistingTags = categories.map(tag => {
+                return Tag.findOne({where: {tag: tag.toLowerCase()}});
+            });
+            return Promise.all(findExistingTags);
+        })
+        .then(existingTags => {
+            const newTags = existingTags.map((foundTag, index) => {
+                if (!foundTag) {
+                    return Tag.create({tag: categories[index]});
+                } else {
+                    return Promise.resolve(foundTag);
+                }
+            });
+            return Promise.all(newTags);
+        })
+        .then(relatedTags => {
+            const insertQuoteTags = relatedTags.map(existTag => {
+                return QuoteTag.create({quote_id: createdQuote.id, tag_id: existTag.id});
+            });
+            return Promise.all(insertQuoteTags);
+        })
+        .then(result => {
+            res.redirect('/quotes');
+        })
+        .catch(console.log);
 }
 const editQuote = (req, res, next) => {
 

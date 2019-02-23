@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../components/header') %>
+</head>
+<body>
+<%- include('../components/navigation') %>
+
+<section class="section">
+    <div class="container">
+
+        <div class="col-sm-6 mx-auto">
+            <h3 class="text-center">Create New Quote</h3>
+            <div class="card-box">
+                <%- include('../components/alert') %>
+                <form method="post" action="/quotes" enctype="multipart/form-data">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="form-group">
+                        <label for="author" class="mb-0">Author</label>
+                        <input type="text" name="author" id="author" class="form-control"
+                               placeholder="Quote author" required>
+                        <small class="text-muted">Legit author or original quote Eg. Arthur, Albert Einstein, or your name</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Quote</label>
+                        <textarea name="quote" id="quote" class="form-control"
+                              placeholder="The content of your quotes" rows="2" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="featured">Featured</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="featured" id="featured" data-max-size="3000000">
+                            <label class="custom-file-label text-muted" for="featured">Optional featured image</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="mb-2">Category</label>
+                        <input type="text" name="category" id="category" class="form-control"
+                               placeholder="Quote category" data-role="tagsinput" required>
+                        <small class="text-muted">Separate categories by comma or enter</small>
+                    </div>
+                    <div class="form-group mb-5">
+                        <label for="description">Description</label>
+                        <textarea name="description" id="description" class="form-control"
+                                  placeholder="Story or comment behind the quotes" rows="2" required></textarea>
+                    </div>
+                    <button class="btn btn-block btn-lg btn-primary mb-3" type="submit" id="form-submit">
+                        SAVE QUOTE
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<%- include('../components/footer') %>
+</body>
+</html>

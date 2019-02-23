@@ -1,4 +1,4 @@
-const Quote = require('../models/quotes');
+const Quote = require('../models/quote');
 const db = require('../utils/database');
 
 const getIndex = (req, res, next) => {

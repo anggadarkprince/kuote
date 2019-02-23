@@ -1,17 +1,3 @@
-
-/*
-====================================================
-
-* 	[Master Stylesheet]
-	
-	Theme Name :  
-	Version    :  
-	Author     :  
-	Author URI :  
-
-====================================================
-
-
 /* ---------------------------------
 1. PRIMARY STYLES
 --------------------------------- */
@@ -93,7 +79,7 @@ header{ font-weight: 400; }
 3. MENU
 --------------------------------- */
 
-header{ overflow: hidden; background: #fff; box-shadow: 0px 2px 15px rgba(0,0,0, .3); }
+header{ overflow: hidden; background: #fff; box-shadow: 0px 2px 15px rgba(0,0,0, .09); }
 
 header .logo{ float: left; height: 40px; margin: 10px 30px; }
 
@@ -228,8 +214,8 @@ header .src-area .src-btn{ position: absolute; top: 0; bottom: 0; left: 0; width
 .card-box{ margin: 30px 0; padding: 30px; box-shadow: 0px 0px 8px rgba(0,0,0,.1);
 	border: 1px solid #ddd; background: #fff; }
 
-.card-box .form-control{ margin-bottom: 30px; border-radius: 1px; border: 0; border-bottom: 1px solid #ddd;
-	height: 45px; line-height: 45px; box-shadow: none; padding: 0; max-width: 100%; }
+.card-box .form-control{ margin-bottom: 10px; border-radius: 1px; border: 0; border-bottom: 1px solid #ddd;
+	height: 45px; line-height: 1.7; box-shadow: none; padding: 0; max-width: 100%; }
 
 .card-box textarea.form-control{ height: auto; }
 
@@ -238,6 +224,19 @@ header .src-area .src-btn{ position: absolute; top: 0; bottom: 0; left: 0; width
 .card-box .submit-btn{ font-size: .8em; outline: 0; padding: 10px 20px; cursor: pointer;
 	border: 1px solid #D2E2FC; background: none; }
 
+.card-box .bootstrap-tagsinput {
+    box-shadow: none; border: none;
+    margin-bottom: 10px; border-radius: 1px; border: 0; border-bottom: 1px solid #ddd;
+    min-height: 45px; line-height: 35px; box-shadow: none; padding: 0; max-width: 100%;
+}
+
+.card-box .bootstrap-tagsinput input {
+    font-size: 16px;
+}
+.card-box .bootstrap-tagsinput .badge {
+    font-size: 85%;
+    font-weight: 400;
+}
 
 /* ---------------------------------
 10. FOOTER
