@@ -24,7 +24,7 @@ h6{ font-size: .9em; letter-spacing: 1px; }
 a, button{ display: inline-block; text-decoration: none; color: inherit; transition: all .3s; }
 
 a:focus, a:active, a:hover,
-button:focus, button:active, button:hover{ text-decoration: none; color: #498BF9; }
+button:not(.btn):focus, button:not(.btn):active, button:not(.btn):hover{ text-decoration: none; color: #498BF9; }
 
 b{ font-weight: 500; }
 
@@ -42,7 +42,7 @@ header{ font-weight: 400; }
 2. COMMONS FOR PAGE DESIGN
 --------------------------------- */
 
-.section{ padding: 70px 0 40px; }
+.section{ padding: 50px 0 40px; }
 
 .section .heading{ padding-bottom: 70px; }
 
@@ -131,10 +131,10 @@ header .src-area .src-btn{ position: absolute; top: 0; bottom: 0; left: 0; width
 
 .blog-area{ text-align: center; background: #EDF3F3; }
 
-.blog-area .single-post{ height: 100%; position: relative; padding-bottom: 45px;
+.single-post{ height: 100%; position: relative; padding-bottom: 45px;
 	overflow: hidden; box-shadow: 0px 0px 7px rgba(0,0,0,.1); border: 1px solid #ddd; background: #fff; }
 
-.blog-area .single-post .title{ padding: 20px 30px 30px; }
+.single-post .title{ padding: 20px 30px 30px; }
 
 .single-post .avatar{ margin: 0 auto; margin-top: -40px; width: 70px; height: 70px; overflow: hidden; z-index: 10;
 	border-radius: 100px; position: relative; border: 7px solid #fff; box-shadow: 0px 0px 15px rgba(0,0,0,.2); }
@@ -158,8 +158,7 @@ header .src-area .src-btn{ position: absolute; top: 0; bottom: 0; left: 0; width
 /* ---------------------------------
 6. NORMAL BLOG
 --------------------------------- */
-
-.post-style-1 .blog-image{ max-height: 200px; overflow: hidden; }
+.blog-image{ max-height: 200px; overflow: hidden; position: relative; }
 
 
 

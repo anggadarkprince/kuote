@@ -28,6 +28,10 @@ const User = db.define('user', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+    avatar: {
+        type: Sequelize.STRING,
+        allowNull: true,
+    },
     status: {
         type:   Sequelize.ENUM,
         values: ['active', 'pending', 'suspended'],

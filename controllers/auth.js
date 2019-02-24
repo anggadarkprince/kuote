@@ -50,7 +50,7 @@ const postLogin = (req, res) => {
                         req.session.isLoggedIn = true;
                         req.session.userId = user.id;
                         req.session.save();
-                        return res.redirect('/dashboard');
+                        return res.redirect('/quotes');
                     } else {
                         req.flash('error', 'Invalid credentials, try again!');
                         res.redirect('/login');
@@ -61,9 +61,16 @@ const postLogin = (req, res) => {
         .catch(console.log);
 };
 
+const postLogout = (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    });
+};
+
 module.exports = {
     getLogin: getLogin,
     postLogin: postLogin,
     getRegister: getRegister,
     postRegister: postRegister,
+    postLogout: postLogout,
 };

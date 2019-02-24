@@ -1,23 +1,23 @@
 <div class="single-post">
     <div class="blog-image">
-        <img src="https://via.placeholder.com/400x200.png" alt="Blog Image">
+        <img src="<%= quote.featured || 'dist/img/no-image.png' %>" alt="Featured image">
+        <%- include('_action') %>
     </div>
     <a class="avatar" href="#">
-        <img src="https://via.placeholder.com/100x100.png" alt="Profile Image">
+        <img src="<%= quote.user.avatar || 'dist/img/no-avatar.png' %>" alt="<%= quote.author %>">
     </a>
     <div class="blog-info">
         <h4 class="title">
             <a href="#">
                 <b>
-                    How Did Van Gogh's Turbulent Mind Depict One of the Most Complex
-                    Concepts in Physics?
+                    <%= quote.quote %>
                 </b>
             </a>
         </h4>
         <ul class="post-footer">
-            <li><a href="#"><i class="ion-heart"></i>57</a></li>
+            <li><a href="#"><i class="ion-heart"></i>3</a></li>
             <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
-            <li><a href="#"><i class="ion-eye"></i>138</a></li>
+            <li><a href="#"><i class="ion-eye"></i><%= quote.views || 0 %></a></li>
         </ul>
     </div>
 </div>

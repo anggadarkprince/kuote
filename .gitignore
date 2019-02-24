@@ -79,3 +79,4 @@ typings/
 .vscode
 
 public/dist/*
+uploads/*

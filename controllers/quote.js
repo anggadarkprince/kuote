@@ -1,16 +1,18 @@
 const Quote = require('../models/quote');
 const QuoteTag = require('../models/quote-tag');
 const Tag = require('../models/tag');
+const User = require('../models/user');
 const db = require('../utils/database');
 
 const index = (req, res, next) => {
     const user = req.user;
     const quote = Quote.findAll({
-        order: db.random(),
-        limit: 4
+        id_user: req.user.id,
+        include: [User]
     })
         .then(quotes => {
-            res.render('dashboard/index', {
+            console.log(quotes);
+            res.render('quote/index', {
                 title: 'Dashboard',
                 user: user,
                 quotes: quotes
@@ -29,8 +31,13 @@ const saveQuote = (req, res, next) => {
     const {author, quote, category, description} = req.body;
     const categories = category.split(',');
 
+    let uploadedPath = null;
+    if(featured) {
+        uploadedPath = featured.path;
+    }
+
     let createdQuote = null;
-    Quote.create({user_id: req.user.id, author, quote, featured: featured.path, description})
+    Quote.create({user_id: req.user.id, author, quote, featured: uploadedPath, description})
         .then(quoteObj => {
             createdQuote = quoteObj;
             const findExistingTags = categories.map(tag => {

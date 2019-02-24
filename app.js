@@ -19,9 +19,7 @@ const Tag = require('./models/tag');
 const errorController = require('./controllers/error');
 const homeRoutes = require('./routes/home');
 const authRoutes = require('./routes/auth');
-const dashboardRoutes = require('./routes/dashboard');
 const quoteRoutes = require('./routes/quote');
-const authMiddleware = require('./middleware/must-authenticated');
 const db = require('./utils/database');
 
 const fileStorage = multer.diskStorage({
@@ -55,7 +53,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(multer({destination: 'images', storage: fileStorage, fileFilter: fileFilter}).single('featured'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static(path.join(__dirname, 'uploads', 'quotes')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 app.use(session({
@@ -90,16 +88,18 @@ app.use((req, res, next) => {
     res.locals._flashSuccess = req.flash('success');
     res.locals._flashError = req.flash('error');
     res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.loggedUser = req.user;
     next();
 });
 
 app.use(homeRoutes);
 app.use(authRoutes);
-app.use(authMiddleware, dashboardRoutes);
 app.use('/quotes', quoteRoutes);
 app.use(errorController.get404);
 
 Quote.belongsToMany(Tag, {through: QuoteTag});
+Quote.belongsTo(User);
+User.hasMany(Quote);
 
 db.sync({force: false})
     .then(result => {

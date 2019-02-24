@@ -18,13 +18,13 @@
                     <div class="form-group">
                         <label for="author" class="mb-0">Author</label>
                         <input type="text" name="author" id="author" class="form-control"
-                               placeholder="Quote author" required>
+                               placeholder="Quote author" required maxlength="50">
                         <small class="text-muted">Legit author or original quote Eg. Arthur, Albert Einstein, or your name</small>
                     </div>
                     <div class="form-group">
                         <label for="author">Quote</label>
                         <textarea name="quote" id="quote" class="form-control"
-                              placeholder="The content of your quotes" rows="2" required></textarea>
+                              placeholder="The content of your quotes" rows="2" maxlength="150" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="featured">Featured</label>
@@ -36,13 +36,13 @@
                     <div class="form-group">
                         <label for="category" class="mb-2">Category</label>
                         <input type="text" name="category" id="category" class="form-control"
-                               placeholder="Quote category" data-role="tagsinput" required>
+                               placeholder="Quote category" data-role="tagsinput" maxlength="100" required>
                         <small class="text-muted">Separate categories by comma or enter</small>
                     </div>
                     <div class="form-group mb-5">
                         <label for="description">Description</label>
                         <textarea name="description" id="description" class="form-control"
-                                  placeholder="Story or comment behind the quotes" rows="2" required></textarea>
+                                  placeholder="Story or comment behind the quotes" rows="2" maxlength="500"></textarea>
                     </div>
                     <button class="btn btn-block btn-lg btn-primary mb-3" type="submit" id="form-submit">
                         SAVE QUOTE
