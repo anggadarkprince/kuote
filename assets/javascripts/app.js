@@ -6,6 +6,8 @@ require('typeahead/style.css');
 require('bootstrap4-tagsinput-douglasanpa/tagsinput.js');
 require('bootstrap4-tagsinput-douglasanpa/tagsinput.css');
 
+require('./pages/quote');
+
 require('./scripts/validation');
 require('./scripts/custom-upload-button');
 require('./scripts/one-touch-submit');

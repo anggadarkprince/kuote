@@ -97,6 +97,8 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+    console.log(req.get('host'));
+    res.locals.baseUrl = `${req.protocol}://${req.get('host')}`;
     res.locals.csrfToken = req.csrfToken();
     res.locals._path = req.path;
     res.locals._flashSuccess = req.flash('success');

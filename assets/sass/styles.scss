@@ -30,7 +30,7 @@ b{ font-weight: 500; }
 
 img{ width: 100%; }
 
-li{ list-style: none; display: inline-block; }
+li{ list-style: none; }
 
 span{ display: inline-block; }
 
@@ -271,3 +271,29 @@ footer .input-area .submit-btn{ position: absolute; top: 0; bottom: 0; right: 0;
 
 
 
+#modal-share {
+	ul li {
+		margin-bottom: 15px;
+		color: #fff;
+
+		a {
+			color: #fff;
+			font-weight: 500;
+			width: 100%;
+			max-width: 330px;
+		}
+		a.btn-facebook {
+			background: #3b5998;
+		}
+		a.btn-twitter {
+			background: #00acee;
+		}
+		a.btn-linkedin {
+			background: #0e76a8;
+		}
+		a.btn-email {
+			background: #ddd;
+			color: #444;
+		}
+	}
+}
