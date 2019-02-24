@@ -1,14 +1,13 @@
-<div class="single-post">
-    <div class="blog-image">
-        <img src="<%= quote.featured || 'dist/img/no-image.png' %>" alt="Featured image">
+<div class="single-post text-center">
+    <div class="featured-image" style="background: url('/<%= quote.featured || 'dist/img/no-image.png' %>') center center / cover">
         <%- include('_action') %>
     </div>
-    <a class="avatar" href="#">
-        <img src="<%= quote.user.avatar || 'dist/img/no-avatar.png' %>" alt="<%= quote.author %>">
+    <a class="avatar" href="/<%= quote.user.username %>">
+        <img src="/<%= quote.user.avatar || 'dist/img/no-avatar.png' %>" alt="<%= quote.user.name %>">
     </a>
     <div class="blog-info">
         <h4 class="title">
-            <a href="#">
+            <a href="/quotes/<%= quote.id %>">
                 <b>
                     <%= quote.quote %>
                 </b>
@@ -16,8 +15,8 @@
         </h4>
         <ul class="post-footer">
             <li><a href="#"><i class="ion-heart"></i>3</a></li>
-            <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
-            <li><a href="#"><i class="ion-checkmark"></i><%= quote.views || 0 %></a></li>
+            <li><a href="#"><i class="ion-chatbubbles"></i>6</a></li>
+            <li><a href="#"><i class="ion-eye" style="font-size: 1.3em"></i><%= quote.views || 0 %></a></li>
         </ul>
     </div>
 </div>

@@ -3,18 +3,21 @@
         Action
     </button>
     <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" href="/quotes/<%= quote.id %>">
+            <i class="ion-ios-search-strong mr-2"></i> Show
+        </a>
         <a class="dropdown-item" href="/quotes/<%= quote.id %>/edit">
-            <i class="ion-ios-compose mr-2"></i> Edit
+            <i class="ion-compose mr-2"></i> Edit
         </a>
         <a class="dropdown-item btn-share" href="/quotes/share"
            data-title="<%= quote.quote %>"
            data-author="<%= quote.author %>"
            data-url="<%= `${baseUrl}/quotes/view/${quote.id}` %>">
-            <i class="ion-android-share mr-2"></i> Share
+            <i class="ion-android-share-alt mr-2"></i> Share
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item btn-delete" data-label="<%= quote.quote %>" href="/quotes/<%= quote.id %>">
-            <i class="ion-trash-b mr-2"></i> Delete
+            <i class="ion-close mr-2"></i> Delete
         </a>
     </div>
 </div>

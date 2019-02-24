@@ -163,7 +163,22 @@ const deleteQuote = (req, res, next) => {
 }
 
 const viewQuote = (req, res, next) => {
-
+    const id = req.params.quoteId;
+    Quote.findOne({
+        where: {id: id, user_id: req.user.id},
+        include: [Tag, User]
+    })
+        .then(quote => {
+            if (quote) {
+                res.render('quote/view', {
+                    title: quote.quote,
+                    quote: quote
+                });
+            } else {
+                res.render('404', {'title': 'Quote not found'});
+            }
+        })
+        .catch(console.log);
 }
 
 module.exports = {

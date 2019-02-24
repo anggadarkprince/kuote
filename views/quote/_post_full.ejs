@@ -1,0 +1,38 @@
+<div class="single-post post-full <%= quote.featured ? '' : 'no-thumbnail' %>">
+
+    <% if(quote.featured) { %>
+        <div class="featured-image" style="background: url('/<%= quote.featured || 'dist/img/no-image.png' %>') center center / cover"></div>
+    <% } %>
+
+    <div class="blog-info">
+        <h6 class="pre-title">
+            <% for(let tag of quote.tags) { %>
+                <a href="/category/<% tag.tag.replace(' ', '-') %>" class="text-uppercase">
+                    <b><%= tag.tag %></b>
+                </a>&nbsp;
+            <% } %>
+        </h6>
+        <h4 class="title"><b><%= quote.quote %></b></h4>
+        <p><%= quote.description %></p>
+        <div class="avatar-area">
+            <a class="avatar" href="/<%= quote.user.username %>">
+                <img src="/<%= quote.user.avatar || 'dist/img/no-avatar.png' %>" alt="<%= quote.user.name %>">
+            </a>
+            <div class="right-area">
+                <a class="name" href="/<%= quote.user.username %>">
+                    <b><%= quote.user.name %></b>
+                </a>
+                <h6 class="date">
+                    on <%= (new Date(quote.created_at)).toLocaleDateString("en-US", {year: 'numeric', month: 'short', day: 'numeric'}) %>
+                    at <%= (new Date(quote.created_at)).getHours() %>:<%= (new Date(quote.created_at)).getMinutes() %>
+                </h6>
+            </div>
+        </div>
+
+        <ul class="post-footer">
+            <li><a href="#"><i class="ion-heart"></i>3</a></li>
+            <li><a href="#"><i class="ion-chatbubbles"></i>6</a></li>
+            <li><a href="#"><i class="ion-eye" style="font-size: 1.2em"></i><%= quote.views || 0 %></a></li>
+        </ul>
+    </div>
+</div>

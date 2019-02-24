@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../components/header') %>
+</head>
+<body>
+<%- include('../components/navigation') %>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-<%= quote.featured ? '8' : '5' %> col-sm-<%= quote.featured ? '12' : '9' %> mx-auto">
+                <div class="card h-100">
+                    <%- include('_post_full', {quote: quote}) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer') %>
+</body>
+</html>

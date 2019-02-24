@@ -6,7 +6,7 @@
 <body>
 <%- include('../components/navigation') %>
 
-<section class="blog-area section">
+<section class="section">
     <div class="container">
 
         <div class="row">
@@ -28,7 +28,7 @@
 
             <div class="col-lg-8 col-md-12">
                 <div class="card h-100">
-                    <%- include('../quote/_story', {withCover: true}) %>
+                    <%- include('../quote/_post_full', {withCover: true}) %>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -39,7 +39,7 @@
 
             <div class="col-lg-4 col-md-6">
                 <div class="card h-100">
-                    <%- include('../quote/_story', {withCover: false}) %>
+                    <%- include('../quote/_post_full', {withCover: false}) %>
                 </div>
             </div>
 
@@ -51,8 +51,8 @@
 
             <div class="col-lg-4 col-md-6">
                 <div class="card h-100">
-                    <%- include('../quote/_simple') %>
-                    <%- include('../quote/_simple') %>
+                    <%- include('../quote/_post_simple') %>
+                    <%- include('../quote/_post_simple') %>
                 </div>
             </div>
         </div>
