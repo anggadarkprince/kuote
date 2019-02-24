@@ -28,6 +28,8 @@
             </div>
         </div>
 
+        <%- include('../components/alert') %>
+
         <% if(quotes.length > 0) { %>
             <div class="row">
                 <% for (let quote of quotes) { %>
@@ -37,13 +39,14 @@
                         </div>
                     </div>
                 <% } %>
-            <div class="row">
+            </div>
         <% } else { %>
             <p>No quotes available!</p>
         <% } %>
     </div>
 </section>
 
+<%- include('../components/modals/_delete') %>
 <%- include('../components/footer') %>
 </body>
 </html>

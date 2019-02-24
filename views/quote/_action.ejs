@@ -6,6 +6,8 @@
         <a class="dropdown-item" href="/quotes/<%= quote.id %>/edit">Edit</a>
         <a class="dropdown-item" href="/quotes/share">Share</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/quotes">Delete</a>
+        <a class="dropdown-item btn-delete" data-label="<%= quote.quote %>" href="/quotes/<%= quote.id %>">
+            Delete
+        </a>
     </div>
 </div>

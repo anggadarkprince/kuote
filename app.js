@@ -4,6 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const methodOverride = require('method-override')
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const helmet = require('helmet');
@@ -24,7 +25,7 @@ const db = require('./utils/database');
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, callback) => {
-        const dir = `./uploads/quotes/${(new Date()).getFullYear()}/${(new Date()).getMonth()}`;
+        const dir = `./uploads/quotes/${(new Date()).getFullYear()}/${(new Date()).getMonth() + 1}`;
         fs.mkdir(dir, {recursive: true}, err => callback(err, dir));
     },
     filename: (req, file, callback) => {
@@ -51,6 +52,19 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs', 'acces
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(methodOverride('X-HTTP-Method'));
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(methodOverride('X-Method-Override'));
+app.use(methodOverride('_method'));
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        var method = req.body._method
+        delete req.body._method
+        return method
+    }
+}))
+
 app.use(multer({destination: 'images', storage: fileStorage, fileFilter: fileFilter}).single('featured'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -86,6 +100,7 @@ app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     res.locals._path = req.path;
     res.locals._flashSuccess = req.flash('success');
+    res.locals._flashWarning = req.flash('warning');
     res.locals._flashError = req.flash('error');
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.loggedUser = req.user;

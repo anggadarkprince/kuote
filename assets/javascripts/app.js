@@ -12,3 +12,7 @@ require('./scripts/one-touch-submit');
 require('./scripts/miscellaneous');
 
 require('../sass/styles.scss');
+
+if ($('.btn-delete').length) {
+    import("./components/delete").then(modalDelete => modalDelete.default());
+}

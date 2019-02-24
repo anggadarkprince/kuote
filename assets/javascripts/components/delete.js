@@ -1,4 +1,4 @@
-export default function() {
+export default function () {
     var modalDelete = $('#modal-delete');
     var buttonDelete = modalDelete.find('[data-submit]');
     var buttonDismiss = modalDelete.find('[data-dismiss]');
@@ -8,11 +8,16 @@ export default function() {
         form.submit();
     });
 
-    $(document).on('click', '.btn-delete', function() {
-        form.attr('action', $(this).data('url'));
+    $(document).on('click', '.btn-delete', function (e) {
+        e.preventDefault();
+        form.attr('action', $(this).data('url') || $(this).attr('href'));
         form.find('[name=id]').val($(this).data('id'));
         modalDelete.find('.delete-title').text($(this).data('title'));
-        modalDelete.find('.delete-label').text($(this).data('label'));
+        modalDelete.find('.delete-label').html(`"${$(this).data('label')}"`);
+        modalDelete.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
     });
 
     buttonDismiss.on('click', function () {

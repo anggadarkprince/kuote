@@ -2,7 +2,7 @@ const Quote = require('../models/quote');
 const QuoteTag = require('../models/quote-tag');
 const Tag = require('../models/tag');
 const User = require('../models/user');
-const db = require('../utils/database');
+const file = require('../utils/file');
 
 const index = (req, res, next) => {
     const user = req.user;
@@ -11,7 +11,6 @@ const index = (req, res, next) => {
         include: [User]
     })
         .then(quotes => {
-            console.log(quotes);
             res.render('quote/index', {
                 title: 'Dashboard',
                 user: user,
@@ -48,7 +47,7 @@ const saveQuote = (req, res, next) => {
         .then(existingTags => {
             const newTags = existingTags.map((foundTag, index) => {
                 if (!foundTag) {
-                    return Tag.create({tag: categories[index]});
+                    return Tag.create({tag: categories[index].toLowerCase()});
                 } else {
                     return Promise.resolve(foundTag);
                 }
@@ -62,6 +61,7 @@ const saveQuote = (req, res, next) => {
             return Promise.all(insertQuoteTags);
         })
         .then(result => {
+            req.flash('success', `Quote from ${createdQuote.author} successfully created!`);
             res.redirect('/quotes');
         })
         .catch(console.log);
@@ -72,9 +72,28 @@ const editQuote = (req, res, next) => {
 const updateQuote = (req, res, next) => {
 
 }
-const deleteQuote = (req, res, next) => {
 
+const deleteQuote = (req, res, next) => {
+    const id = req.params.quoteId;
+    Quote.findOne({where: {id: id, user_id: req.user.id}})
+        .then(quote => {
+            if(quote) {
+                if(quote.featured) {
+                    file.deleteFile(quote.featured);
+                }
+                return quote.destroy();
+            } else {
+                req.flash('danger', 'Quote not found or you are not authorized to perform the action');
+                return res.redirect('/quotes');
+            }
+        })
+        .then(result => {
+            req.flash('warning', `Quote from ${result.author} successfully deleted!`);
+            return res.redirect('/quotes');
+        })
+        .catch(console.log);
 }
+
 const viewQuote = (req, res, next) => {
 
 }
