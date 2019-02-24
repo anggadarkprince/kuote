@@ -3,11 +3,15 @@
         Action
     </button>
     <div class="dropdown-menu dropdown-menu-right">
-        <a class="dropdown-item" href="/quotes/<%= quote.id %>/edit">Edit</a>
-        <a class="dropdown-item" href="/quotes/share">Share</a>
+        <a class="dropdown-item" href="/quotes/<%= quote.id %>/edit">
+            <i class="ion-ios-compose mr-2"></i> Edit
+        </a>
+        <a class="dropdown-item" href="/quotes/share">
+            <i class="ion-android-share mr-2"></i> Share
+        </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item btn-delete" data-label="<%= quote.quote %>" href="/quotes/<%= quote.id %>">
-            Delete
+            <i class="ion-trash-b mr-2"></i> Delete
         </a>
     </div>
 </div>
