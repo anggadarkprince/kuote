@@ -14,9 +14,9 @@
             </a>
         </h4>
         <ul class="post-footer">
-            <li><a href="#"><i class="ion-heart"></i>3</a></li>
-            <li><a href="#"><i class="ion-chatbubbles"></i>6</a></li>
-            <li><a href="#"><i class="ion-eye" style="font-size: 1.3em"></i><%= quote.views || 0 %></a></li>
+            <li><a href="#"><i class="ion-heart"></i><%= quote.get('total_likes') || 0 %></a></li>
+            <li><a href="#"><i class="ion-chatbubbles"></i><%= quote.get('total_comments') || 0 %></a></li>
+            <li><a href="#"><i class="ion-eye" style="font-size: 1.3em"></i><%= quote.total_views || 0 %></a></li>
         </ul>
     </div>
 </div>

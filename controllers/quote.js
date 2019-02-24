@@ -1,22 +1,40 @@
 const Quote = require('../models/quote');
 const QuoteTag = require('../models/quote-tag');
+const QuoteLike = require('../models/quote-like');
+const QuoteComment = require('../models/quote-comment');
 const Tag = require('../models/tag');
 const User = require('../models/user');
 const file = require('../utils/file');
+const db = require('../utils/database');
 
 const index = (req, res, next) => {
     const user = req.user;
-    const quote = Quote.findAll({
+    Quote.findAll({
+        attributes: {
+            include: [
+                'quote.*',
+                [db.fn('COUNT', db.col('quote_likes.id')), 'total_likes'],
+                [db.fn('COUNT', db.col('quote_comments.id')), 'total_comments'],
+            ]
+        },
         where: {user_id: req.user.id},
-        include: [User]
+        include: [
+            User,
+            {model: QuoteLike, as: 'quote_likes', attributes: []},
+            {model: QuoteComment, as: 'quote_comments', attributes: []}
+        ],
+        group: [db.col('quote.id')]
     })
         .then(quotes => {
+            console.log(quotes[0].dataValues.quote);
+            console.log(quotes[0].dataValues.total_likes);
             res.render('quote/index', {
-                title: 'Dashboard',
+                title: 'Quotes',
                 user: user,
                 quotes: quotes
             });
-        });
+        })
+        .catch(console.log);
 };
 
 const createQuote = (req, res, next) => {
@@ -165,6 +183,13 @@ const deleteQuote = (req, res, next) => {
 const viewQuote = (req, res, next) => {
     const id = req.params.quoteId;
     Quote.findOne({
+        attributes: {
+            include: [
+                'quote.*',
+                [db.literal('(SELECT COUNT(*) FROM quote_likes WHERE quote_likes.quote_id = quote.id)'), 'total_likes'],
+                [db.literal('(SELECT COUNT(*) FROM quote_comments WHERE quote_comments.quote_id = quote.id)'), 'total_comments'],
+            ]
+        },
         where: {id: id, user_id: req.user.id},
         include: [Tag, User]
     })

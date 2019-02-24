@@ -36,7 +36,7 @@ const Quote = db.define('quote', {
             len: [0,300]
         }
     },
-    views: {
+    total_views: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,

@@ -16,6 +16,8 @@ const User = require('./models/user');
 const Quote = require('./models/quote');
 const QuoteTag = require('./models/quote-tag');
 const Tag = require('./models/tag');
+const QuoteLike = require('./models/quote-like');
+const QuoteComment = require('./models/quote-comment');
 
 const errorController = require('./controllers/error');
 const homeRoutes = require('./routes/home');
@@ -115,6 +117,8 @@ app.use('/quotes', quoteRoutes);
 app.use(errorController.get404);
 
 Quote.belongsToMany(Tag, {through: QuoteTag});
+Quote.hasMany(QuoteLike);
+Quote.hasMany(QuoteComment);
 Quote.belongsTo(User);
 User.hasMany(Quote);
 
