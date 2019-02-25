@@ -10,11 +10,11 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="footer-section">
-                    <h4 class="title"><b>CATEGORIES</b></h4>
+                    <h5 class="title"><b>CATEGORIES</b></h5>
                     <ul class="d-flex flex-wrap">
                         <% for(let popularTag of popularTags) { %>
                             <li style="flex-basis: 50%" class="text-uppercase">
-                                <a href="/category/<%= popularTag.tag.replace(' ', '-') %>">
+                                <a href="/quotes/category/<%= popularTag.tag.replace(' ', '-') %>">
                                     <%= popularTag.tag %>
                                 </a>
                             </li>
@@ -24,7 +24,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="footer-section">
-                    <h4 class="title"><b>SUBSCRIBE</b></h4>
+                    <h5 class="title"><b>SUBSCRIBE</b></h5>
                     <div class="input-area">
                         <form>
                             <input class="email-input" type="text" placeholder="Enter your email">

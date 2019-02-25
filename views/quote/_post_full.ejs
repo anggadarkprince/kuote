@@ -7,7 +7,7 @@
     <div class="blog-info">
         <h6 class="pre-title">
             <% for(let tag of quote.tags) { %>
-                <a href="/category/<% tag.tag.replace(' ', '-') %>" class="text-uppercase">
+                <a href="/quotes/category/<% tag.tag.replace(' ', '-') %>" class="text-uppercase">
                     <b><%= tag.tag %></b>
                 </a>&nbsp;
             <% } %>

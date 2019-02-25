@@ -6,6 +6,7 @@ const Tag = require('../models/tag');
 const User = require('../models/user');
 const file = require('../utils/file');
 const db = require('../utils/database');
+const Op = require("sequelize/lib/operators");
 
 const index = (req, res, next) => {
     const user = req.user;
@@ -222,6 +223,32 @@ const popularQuote = (req, res, next) => {
         .catch(console.log);
 };
 
+
+const quoteTag = (req, res, next) => {
+    const tag = req.params.tag;
+    Quote.findAll({
+        include: [
+            User,
+            {
+                model: Tag,
+                where: {
+                    tag: {
+                        [Op.like]: `%${tag.replace('-', ' ')}%`
+                    }
+                }
+            }
+        ]
+    })
+        .then(quotes => {
+            res.render('home/category', {
+                title: 'Quotes ' + tag,
+                tag: tag,
+                quotes: quotes
+            });
+        })
+        .catch(console.log);
+};
+
 module.exports = {
     index: index,
     create: createQuote,
@@ -231,4 +258,5 @@ module.exports = {
     delete: deleteQuote,
     view: viewQuote,
     popular: popularQuote,
+    category: quoteTag,
 };
