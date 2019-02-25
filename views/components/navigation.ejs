@@ -24,9 +24,10 @@
         </ul>
 
         <div class="src-area">
-            <form action="/search">
+            <form action="/search" class="no-validation">
                 <button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
-                <input class="src-input" name="q" type="text" placeholder="Type of search">
+                <input class="src-input" name="q" type="text" value="<%= typeof q != "undefined" ? q : '' %>"
+                       required placeholder="Type of search">
             </form>
         </div>
     </div>

@@ -54,7 +54,7 @@ $.validator.addMethod('file_size', function (value, element, param) {
     return this.optional(element) || ((element.files[0].size / 1000) <= param)
 }, "The file must below or equal {0} KB");
 
-const forms = $('form');
+const forms = $('form:not(.no-validation)');
 forms.each(function (index, form) {
     $(form).validate();
 });
