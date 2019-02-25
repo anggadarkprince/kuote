@@ -1,6 +1,6 @@
 <div class="single-post text-center">
     <div class="featured-image" style="background: url('/<%= quote.featured || 'dist/img/no-image.png' %>') center center / cover">
-        <% if(quote.user.id == loggedUser.id) { %>
+        <% if(isAuthenticated && quote.user.id == loggedUser.id) { %>
             <%- include('_action') %>
         <% } %>
     </div>

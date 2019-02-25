@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const error = require('../utils/error');
 
 const getLogin = (req, res, next) => {
     res.render('auth/login', {
@@ -25,7 +26,9 @@ const postRegister = (req, res, next) => {
             req.flash('success', 'You are registered!');
             res.redirect('/login');
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const postLogin = (req, res) => {
@@ -33,7 +36,7 @@ const postLogin = (req, res) => {
 
     let condition = {username: username};
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(re.test(String(username).toLowerCase())) {
+    if (re.test(String(username).toLowerCase())) {
         condition = {email: username};
     }
 
@@ -43,21 +46,22 @@ const postLogin = (req, res) => {
                 req.flash('error', 'User not found');
                 return res.redirect('/login');
             }
-            bcrypt.compare(password, user.password)
-                .then(matchedPassword => {
-                    if (matchedPassword) {
-                        req.session.isLoggedIn = true;
-                        req.session.userId = user.id;
-                        req.session.save();
-                        return res.redirect('/quotes');
-                    } else {
-                        req.flash('error', 'Invalid credentials, try again!');
-                        res.redirect('/login');
-                    }
-                })
-                .catch(console.log);
+            return bcrypt.compare(password, user.password)
         })
-        .catch(console.log);
+        .then(matchedPassword => {
+            if (matchedPassword) {
+                req.session.isLoggedIn = true;
+                req.session.userId = user.id;
+                req.session.save();
+                res.redirect('/quotes');
+            } else {
+                req.flash('error', 'Invalid credentials, try again!');
+                res.redirect('/login');
+            }
+        })
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const postLogout = (req, res) => {

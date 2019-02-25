@@ -124,7 +124,6 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    console.log(req.get('host'));
     res.locals.baseUrl = `${req.protocol}://${req.get('host')}`;
     res.locals.csrfToken = req.csrfToken();
     res.locals._path = req.path;
@@ -135,10 +134,17 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(authRoutes);
 app.use('/quotes', quoteRoutes);
 app.use(homeRoutes);
-app.use(authRoutes);
 app.use(errorController.get404);
+app.use((error, req, res, next) => {
+    console.log(error);
+    if (!res.locals.isAuthenticated) {
+        res.locals.isAuthenticated = false;
+    }
+    res.status(500).render('500', {title: 'Internal server error'});
+});
 
 Tag.hasMany(QuoteTag);
 Quote.belongsToMany(Tag, {through: QuoteTag});

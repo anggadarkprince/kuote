@@ -3,6 +3,7 @@ const Quote = require('../models/quote');
 const Tag = require('../models/tag');
 const User = require('../models/user');
 const db = require('../utils/database');
+const error = require('../utils/error');
 
 const getIndex = (req, res, next) => {
     const quoteThumbnails = Quote.findAll({
@@ -41,7 +42,9 @@ const getIndex = (req, res, next) => {
                 quoteSimples: data[2],
             });
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const profile = (req, res, next) => {
@@ -64,7 +67,9 @@ const profile = (req, res, next) => {
                 res.render('404', {'title': 'Quote not found'});
             }
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const searchQuote = (req, res, next) => {
@@ -93,7 +98,9 @@ const searchQuote = (req, res, next) => {
                 quotes: quotes
             });
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 module.exports = {

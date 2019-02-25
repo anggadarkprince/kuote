@@ -6,6 +6,7 @@ const Tag = require('../models/tag');
 const User = require('../models/user');
 const file = require('../utils/file');
 const db = require('../utils/database');
+const error = require('../utils/error');
 const Op = require("sequelize/lib/operators");
 
 const index = (req, res, next) => {
@@ -33,7 +34,9 @@ const index = (req, res, next) => {
                 quotes: quotes
             });
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const createQuote = (req, res, next) => {
@@ -82,7 +85,9 @@ const saveQuote = (req, res, next) => {
             req.flash('success', `Quote from ${createdQuote.author} successfully created!`);
             res.redirect('/quotes');
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const editQuote = (req, res, next) => {
@@ -102,7 +107,9 @@ const editQuote = (req, res, next) => {
                 return res.redirect('/quotes');
             }
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const updateQuote = (req, res, next) => {
@@ -151,13 +158,17 @@ const updateQuote = (req, res, next) => {
                     });
                     return Promise.all(insertQuoteTags);
                 })
-                .catch(console.log);
+                .catch((err) => {
+                    error.errorHandler(err, next);
+                });
         })
         .then(result => {
             req.flash('success', `Quote from ${updatedQuote.author} successfully updated!`);
             res.redirect('/quotes');
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const deleteQuote = (req, res, next) => {
@@ -178,7 +189,9 @@ const deleteQuote = (req, res, next) => {
             req.flash('warning', `Quote from ${result.author} successfully deleted!`);
             return res.redirect('/quotes');
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 const viewQuote = (req, res, next) => {
@@ -204,7 +217,9 @@ const viewQuote = (req, res, next) => {
                 res.render('404', {'title': 'Quote not found'});
             }
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 
@@ -220,7 +235,9 @@ const popularQuote = (req, res, next) => {
                 quotes: quotes
             });
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 
@@ -246,7 +263,9 @@ const quoteTag = (req, res, next) => {
                 quotes: quotes
             });
         })
-        .catch(console.log);
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
 };
 
 module.exports = {

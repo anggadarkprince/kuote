@@ -1,5 +1,6 @@
 const Quote = require('../models/quote');
 const db = require('../utils/database');
+const error = require('../utils/error');
 
 const getIndex = (req, res, next) => {
     const user = req.user;
@@ -13,6 +14,9 @@ const getIndex = (req, res, next) => {
                 user: user,
                 quotes: quotes
             });
+        })
+        .catch((err) => {
+            error.errorHandler(err, next);
         });
 };
 
