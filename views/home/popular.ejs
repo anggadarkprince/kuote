@@ -9,23 +9,23 @@
 <section class="section">
     <div class="container">
 
-        <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
+        <h4 class="mb-4">Most Popular</h4>
+
+        <%- include('../components/alert') %>
+
+        <% if(quotes.length > 0) { %>
+            <div class="row">
+                <% for (let quote of quotes) { %>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100">
+                        <%- include('../quote/_thumbnail', {quote}) %>
+                    </div>
                 </div>
+                <% } %>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
-                </div>
-            </div>
-        </div>
+        <% } else { %>
+            <p>No popular quotes available!</p>
+        <% } %>
 
     </div>
 </section>

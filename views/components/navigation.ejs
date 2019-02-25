@@ -10,7 +10,7 @@
                 <a href="/quote-of-the-day">Quote of the Day</a>
             </li>
             <li class="<%= _path == '/most-popular' ? 'active' : '' %>">
-                <a href="/most-popular">Most Popular</a>
+                <a href="/quotes/popular">Most Popular</a>
             </li>
             <% if(!isAuthenticated) { %>
                 <li class="<%= _path == '/login' || _path == '/register' ? 'active' : '' %>">

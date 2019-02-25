@@ -11,15 +11,14 @@
             <div class="col-lg-4 col-md-6">
                 <div class="footer-section">
                     <h4 class="title"><b>CATEGORIES</b></h4>
-                    <ul>
-                        <li><a href="/category/beauty">BEAUTY</a></li>
-                        <li><a href="/category/health">HEALTH</a></li>
-                        <li><a href="/category/life">LIFE</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="/category/social">SOCIAL</a></li>
-                        <li><a href="/category/motivation">MOTIVATION</a></li>
-                        <li><a href="/category/happy">HAPPY</a></li>
+                    <ul class="d-flex flex-wrap">
+                        <% for(let popularTag of popularTags) { %>
+                            <li style="flex-basis: 50%" class="text-uppercase">
+                                <a href="/category/<%= popularTag.tag.replace(' ', '-') %>">
+                                    <%= popularTag.tag %>
+                                </a>
+                            </li>
+                        <% } %>
                     </ul>
                 </div>
             </div>

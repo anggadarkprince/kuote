@@ -40,13 +40,13 @@
     "typeahead": "^0.2.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10",
-    "autoprefixer": "^9.4.6",
+    "autoprefixer": "^9.4.9",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^2.1.0",
     "file-loader": "^3.0.1",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.18.10",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",

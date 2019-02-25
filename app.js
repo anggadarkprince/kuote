@@ -93,6 +93,26 @@ app.use((req, res, next) => {
     User.findByPk(req.session.userId)
         .then(user => {
             req.user = user;
+            return Tag.findAll({
+                attributes: {
+                    include: [
+                        'tag.*',
+                        [
+                            db.literal('(SELECT COUNT(*) FROM quote_tags WHERE quote_tags.tag_id = tag.id)'),
+                            'total_quotes'
+                        ],
+                    ]
+                },
+                group: [db.col('tag.id')],
+                order: [
+                    [db.literal('total_quotes'), 'DESC']
+                ],
+                limit: 8
+            });
+        })
+        .then(tags => {
+            res.locals.loggedUser = req.user;
+            res.locals.popularTags = tags;
             next();
         })
         .catch(console.log);
@@ -107,7 +127,6 @@ app.use((req, res, next) => {
     res.locals._flashWarning = req.flash('warning');
     res.locals._flashError = req.flash('error');
     res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.loggedUser = req.user;
     next();
 });
 
@@ -116,6 +135,7 @@ app.use(authRoutes);
 app.use('/quotes', quoteRoutes);
 app.use(errorController.get404);
 
+Tag.hasMany(QuoteTag);
 Quote.belongsToMany(Tag, {through: QuoteTag});
 Quote.hasMany(QuoteLike);
 Quote.hasMany(QuoteComment);

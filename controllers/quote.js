@@ -206,6 +206,22 @@ const viewQuote = (req, res, next) => {
         .catch(console.log);
 };
 
+
+const popularQuote = (req, res, next) => {
+    Quote.findAll({
+        include: [User],
+        order: [['total_views', 'DESC']],
+        limit: 12
+    })
+        .then(quotes => {
+            res.render('home/popular', {
+                title: 'Popular Quotes',
+                quotes: quotes
+            });
+        })
+        .catch(console.log);
+};
+
 module.exports = {
     index: index,
     create: createQuote,
@@ -214,4 +230,5 @@ module.exports = {
     update: updateQuote,
     delete: deleteQuote,
     view: viewQuote,
+    popular: popularQuote,
 };

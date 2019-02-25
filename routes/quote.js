@@ -4,6 +4,7 @@ const quoteController = require('../controllers/quote');
 const authMiddleware = require('../middleware/must-authenticated');
 
 router.get('/', quoteController.index);
+router.get('/popular', quoteController.popular);
 router.get('/create', authMiddleware, quoteController.create);
 router.get('/:quoteId', quoteController.view);
 router.post('/', authMiddleware, quoteController.save);
