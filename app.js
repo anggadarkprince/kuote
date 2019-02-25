@@ -93,25 +93,30 @@ app.use((req, res, next) => {
     User.findByPk(req.session.userId)
         .then(user => {
             req.user = user;
-            return Tag.findAll({
-                attributes: {
-                    include: [
-                        'tag.*',
-                        [
-                            db.literal('(SELECT COUNT(*) FROM quote_tags WHERE quote_tags.tag_id = tag.id)'),
-                            'total_quotes'
-                        ],
-                    ]
-                },
-                group: [db.col('tag.id')],
-                order: [
-                    [db.literal('total_quotes'), 'DESC']
-                ],
-                limit: 8
-            });
+            res.locals.loggedUser = user;
+            next();
         })
+        .catch(console.log);
+});
+
+app.use((req, res, next) => {
+    Tag.findAll({
+        attributes: {
+            include: [
+                'tag.*',
+                [
+                    db.literal('(SELECT COUNT(*) FROM quote_tags WHERE quote_tags.tag_id = tag.id)'),
+                    'total_quotes'
+                ],
+            ]
+        },
+        group: [db.col('tag.id')],
+        order: [
+            [db.literal('total_quotes'), 'DESC']
+        ],
+        limit: 8
+    })
         .then(tags => {
-            res.locals.loggedUser = req.user;
             res.locals.popularTags = tags;
             next();
         })
@@ -130,9 +135,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/quotes', quoteRoutes);
 app.use(homeRoutes);
 app.use(authRoutes);
-app.use('/quotes', quoteRoutes);
 app.use(errorController.get404);
 
 Tag.hasMany(QuoteTag);

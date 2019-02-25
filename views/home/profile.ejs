@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../components/header') %>
+</head>
+<body>
+<%- include('../components/navigation') %>
+
+<section class="section">
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center mb-5">
+            <img src="<%= user.avatar || 'dist/img/no-avatar.png' %>" alt="Avatar"
+                 class="rounded-circle mr-4" style="width: 100px">
+            <div>
+                <h3><%= user.name %></h3>
+                <ul class="list-inline mb-3">
+                    <li class="list-inline-item text-muted"><%= user.email %></li>
+                    <% if(user.id == loggedUser.id) { %>
+                        <li class="list-inline-item">|</li>
+                        <li class="list-inline-item"><a href="/account" class="text-primary">Edit</a></li>
+                        <li class="list-inline-item">
+                            <form action="/logout" method="post">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <a href="#" onclick="this.parentElement.submit()" class="text-danger">Logout</a>
+                            </form>
+                        </li>
+                    <% } %>
+                </ul>
+                <% if(user.id == loggedUser.id) { %>
+                    <a href="/quotes/create" class="btn btn-primary mb-3">CREATE NEW QUOTE</a>
+                <% } %>
+            </div>
+        </div>
+
+        <%- include('../components/alert') %>
+
+        <% if(user.quotes.length > 0) { %>
+            <div class="row">
+                <% for (let quote of user.quotes) { %>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <%- include('../quote/_thumbnail', {quote}) %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <p>No quotes available!</p>
+        <% } %>
+    </div>
+</section>
+
+<%- include('../quote/_modal_share') %>
+<%- include('../components/modals/_delete') %>
+<%- include('../components/footer') %>
+</body>
+</html>

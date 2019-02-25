@@ -191,7 +191,7 @@ const viewQuote = (req, res, next) => {
                 [db.literal('(SELECT COUNT(*) FROM quote_comments WHERE quote_comments.quote_id = quote.id)'), 'total_comments'],
             ]
         },
-        where: {id: id, user_id: req.user.id},
+        where: {id: id},
         include: [Tag, User]
     })
         .then(quote => {

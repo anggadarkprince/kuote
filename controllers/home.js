@@ -8,6 +8,29 @@ const getIndex = (req, res, next) => {
     });
 };
 
+const profile = (req, res, next) => {
+    const username = req.params.username;
+
+    User.findOne({
+        where: {username: username},
+        include: [{
+            model: Quote,
+            include: [User]
+        }]
+    })
+        .then(user => {
+            if(user) {
+                res.render('home/profile', {
+                    title: user.username,
+                    user: user
+                });
+            } else {
+                res.render('404', {'title': 'Quote not found'});
+            }
+        })
+        .catch(console.log);
+};
+
 const searchQuote = (req, res, next) => {
     const q = req.query.q.trim();
     Quote.findAll({
@@ -40,4 +63,5 @@ const searchQuote = (req, res, next) => {
 module.exports = {
     getIndex: getIndex,
     searchQuote: searchQuote,
+    profile: profile,
 };
