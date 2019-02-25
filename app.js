@@ -23,6 +23,7 @@ const errorController = require('./controllers/error');
 const homeRoutes = require('./routes/home');
 const authRoutes = require('./routes/auth');
 const quoteRoutes = require('./routes/quote');
+const accountRoutes = require('./routes/account');
 const db = require('./utils/database');
 
 const fileStorage = multer.diskStorage({
@@ -130,11 +131,13 @@ app.use((req, res, next) => {
     res.locals._flashSuccess = req.flash('success');
     res.locals._flashWarning = req.flash('warning');
     res.locals._flashError = req.flash('error');
+    res.locals._old = req.flash('old')[0] || {};
     res.locals.isAuthenticated = req.session.isLoggedIn;
     next();
 });
 
 app.use(authRoutes);
+app.use(accountRoutes);
 app.use('/quotes', quoteRoutes);
 app.use(homeRoutes);
 app.use(errorController.get404);

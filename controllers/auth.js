@@ -2,13 +2,13 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const error = require('../utils/error');
 
-const getLogin = (req, res, next) => {
+const getLogin = (req, res) => {
     res.render('auth/login', {
         title: 'Login',
     });
 };
 
-const getRegister = (req, res, next) => {
+const getRegister = (req, res) => {
     res.render('auth/register', {
         title: 'Register',
     });
@@ -31,7 +31,7 @@ const postRegister = (req, res, next) => {
         });
 };
 
-const postLogin = (req, res) => {
+const postLogin = (req, res, next) => {
     const {username, password} = req.body;
 
     let condition = {username: username};
@@ -40,18 +40,20 @@ const postLogin = (req, res) => {
         condition = {email: username};
     }
 
+    let createdUser;
     User.findOne({where: condition})
         .then(user => {
             if (!user) {
                 req.flash('error', 'User not found');
                 return res.redirect('/login');
             }
+            createdUser = user;
             return bcrypt.compare(password, user.password)
         })
         .then(matchedPassword => {
             if (matchedPassword) {
                 req.session.isLoggedIn = true;
-                req.session.userId = user.id;
+                req.session.userId = createdUser.id;
                 req.session.save();
                 res.redirect('/quotes');
             } else {

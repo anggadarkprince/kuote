@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../components/header') %>
+</head>
+<body>
+<%- include('../components/navigation') %>
+
+<section class="section">
+    <div class="container">
+
+        <%- include('../account/_profile') %>
+
+        <div class="col-sm-5 mx-auto text-center">
+            <%- include('../components/alert') %>
+            <form action="/account?_method=put" method="post">
+                <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="card-box">
+                    <h4 class="mb-2">Basic</h4>
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" value="<%= _old.name || user.name %>"
+                               placeholder="Your full name" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control" value="<%= _old.username || user.username %>"
+                               placeholder="Username" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" value="<%= _old.email || user.email %>"
+                               placeholder="Email address" required maxlength="50">
+                    </div>
+                </div>
+
+                <div class="card-box">
+                    <h4 class="mb-2">Change Password</h4>
+                    <div class="form-group">
+                        <input type="password" name="new_password" class="form-control"
+                               placeholder="New password" maxlength="50">
+                        <span class="form-text text-left">
+                            Leave it blank if you don't wanna change the password
+                        </span>
+                    </div>
+                    <div class="form-group mb-4">
+                        <input type="password" name="confirm_password" class="form-control"
+                               placeholder="Confirm your new password" maxlength="50">
+                    </div>
+                </div>
+
+                <div class="card-box">
+                    <button class="btn btn-success btn-lg btn-block" type="submit" id="form-submit">
+                        UPDATE ACCOUNT
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<%- include('../components/footer') %>
+</body>
+</html>
