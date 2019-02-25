@@ -10,51 +10,34 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
+            <% if(quoteThumbnails.length > 0) { %>
+                <div class="row">
+                    <% for (let quote of quoteThumbnails) { %>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <%- include('../quote/_thumbnail', {quote}) %>
+                        </div>
+                    </div>
+                    <% } %>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
-                </div>
-            </div>
+            <% } %>
 
             <div class="col-lg-8 col-md-12">
                 <div class="card h-100">
-                    <%- include('../quote/_post_full', {withCover: true}) %>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
+                    <%- include('../quote/_post_full', {quote: quoteFull}) %>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_post_full', {withCover: false}) %>
+            <% if(quoteSimples.length > 0) { %>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100">
+                        <% for (let quote of quoteSimples) { %>
+                            <%- include('../quote/_post_simple', {quote}) %>
+                        <% } %>
+                    </div>
                 </div>
-            </div>
+            <% } %>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_thumbnail') %>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6">
-                <div class="card h-100">
-                    <%- include('../quote/_post_simple') %>
-                    <%- include('../quote/_post_simple') %>
-                </div>
-            </div>
         </div>
 
     </div>

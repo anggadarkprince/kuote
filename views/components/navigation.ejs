@@ -6,10 +6,7 @@
         <div class="menu-nav-icon" data-nav-menu="#main-menu"><i class="ion-navicon"></i></div>
 
         <ul class="main-menu visible-on-click" id="main-menu">
-            <li class="<%= _path == '/quote-of-the-day' ? 'active' : '' %>">
-                <a href="/quote-of-the-day">Quote of the Day</a>
-            </li>
-            <li class="<%= _path == '/most-popular' ? 'active' : '' %>">
+            <li class="<%= _path == '/quotes/popular' ? 'active' : '' %>">
                 <a href="/quotes/popular">Most Popular</a>
             </li>
             <% if(!isAuthenticated) { %>

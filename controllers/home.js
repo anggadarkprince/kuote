@@ -1,11 +1,47 @@
-const Quote = require('../models/quote');
-const User = require('../models/user');
 const Op = require("sequelize/lib/operators");
+const Quote = require('../models/quote');
+const Tag = require('../models/tag');
+const User = require('../models/user');
+const db = require('../utils/database');
 
 const getIndex = (req, res, next) => {
-    res.render('home/index', {
-        title: 'Home',
+    const quoteThumbnails = Quote.findAll({
+        include: [User],
+        where: {
+            [Op.not]: [{'featured': ''}, {'featured': null}],
+        },
+        order: db.random(),
+        limit: 3
     });
+
+    const quoteFull = Quote.findOne({
+        include: [Tag, User],
+        where: {
+            [Op.not]: [{'featured': ''}, {'featured': null}, {'description': ''}, {'description': null}],
+        },
+        order: db.random(),
+        limit: 1
+    });
+
+    const quoteSimples = Quote.findAll({
+        include: [Tag, User],
+        where: {
+            [Op.not]: [{'description': ''}, {'description': null}],
+        },
+        order: db.random(),
+        limit: 2
+    });
+
+    Promise.all([quoteThumbnails, quoteFull, quoteSimples])
+        .then((data) => {
+            res.render('home/index', {
+                title: 'Home',
+                quoteThumbnails: data[0],
+                quoteFull: data[1],
+                quoteSimples: data[2],
+            });
+        })
+        .catch(console.log);
 };
 
 const profile = (req, res, next) => {
