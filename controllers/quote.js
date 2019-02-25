@@ -26,8 +26,6 @@ const index = (req, res, next) => {
         group: [db.col('quote.id')]
     })
         .then(quotes => {
-            console.log(quotes[0].dataValues.quote);
-            console.log(quotes[0].dataValues.total_likes);
             res.render('quote/index', {
                 title: 'Quotes',
                 user: user,
@@ -41,7 +39,7 @@ const createQuote = (req, res, next) => {
     res.render('quote/create', {
         title: 'Create new quote',
     });
-}
+};
 
 const saveQuote = (req, res, next) => {
     const featured = req.file;
@@ -50,7 +48,8 @@ const saveQuote = (req, res, next) => {
 
     let uploadedPath = null;
     if (featured) {
-        uploadedPath = featured.path;
+        // linux just featured.path
+        uploadedPath = `uploads/quotes/${(new Date()).getFullYear()}/${((new Date()).getMonth() + 1)}/${featured.filename}`;
     }
 
     let createdQuote = null;
@@ -83,7 +82,7 @@ const saveQuote = (req, res, next) => {
             res.redirect('/quotes');
         })
         .catch(console.log);
-}
+};
 
 const editQuote = (req, res, next) => {
     const id = req.params.quoteId;
@@ -103,7 +102,7 @@ const editQuote = (req, res, next) => {
             }
         })
         .catch(console.log);
-}
+};
 
 const updateQuote = (req, res, next) => {
     const id = req.params.quoteId;
@@ -113,7 +112,8 @@ const updateQuote = (req, res, next) => {
 
     let uploadedPath = null;
     if (featured) {
-        uploadedPath = featured.path;
+        // linux just featured.path
+        uploadedPath = `uploads/quotes/${(new Date()).getFullYear()}/${((new Date()).getMonth() + 1)}/${featured.filename}`;
     }
 
     let updatedQuote = null;
@@ -157,7 +157,7 @@ const updateQuote = (req, res, next) => {
             res.redirect('/quotes');
         })
         .catch(console.log);
-}
+};
 
 const deleteQuote = (req, res, next) => {
     const id = req.params.quoteId;
@@ -178,7 +178,7 @@ const deleteQuote = (req, res, next) => {
             return res.redirect('/quotes');
         })
         .catch(console.log);
-}
+};
 
 const viewQuote = (req, res, next) => {
     const id = req.params.quoteId;
@@ -204,7 +204,7 @@ const viewQuote = (req, res, next) => {
             }
         })
         .catch(console.log);
-}
+};
 
 module.exports = {
     index: index,

@@ -4,7 +4,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const helmet = require('helmet');
@@ -27,7 +27,7 @@ const db = require('./utils/database');
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, callback) => {
-        const dir = `./uploads/quotes/${(new Date()).getFullYear()}/${(new Date()).getMonth() + 1}`;
+        const dir = path.join(__dirname, 'uploads', 'quotes', (new Date()).getFullYear().toString(), ((new Date()).getMonth() + 1).toString());
         fs.mkdir(dir, {recursive: true}, err => callback(err, dir));
     },
     filename: (req, file, callback) => {
@@ -41,7 +41,7 @@ const fileFilter = (req, file, callback) => {
     } else {
         callback(null, false);
     }
-}
+};
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -61,17 +61,17 @@ app.use(methodOverride('_method'));
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         // look in urlencoded POST bodies and delete it
-        var method = req.body._method
-        delete req.body._method
-        return method
+        let method = req.body._method;
+        delete req.body._method;
+        return method;
     }
-}))
+}));
 
 app.use(multer({destination: 'images', storage: fileStorage, fileFilter: fileFilter}).single('featured'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 app.use(session({
     secret: 'secret-session-key',
     resave: false,

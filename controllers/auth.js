@@ -39,7 +39,6 @@ const postLogin = (req, res) => {
 
     User.findOne({where: condition})
         .then(user => {
-            console.log(user);
             if (!user) {
                 req.flash('error', 'User not found');
                 return res.redirect('/login');
