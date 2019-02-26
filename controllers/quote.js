@@ -274,7 +274,7 @@ const likeQuote = (req, res, next) => {
     const id = req.params.quoteId;
     QuoteLike.findOrCreate({where: {quote_id: id, user_id: req.user.id}})
         .spread((like, created) => {
-            if(created) {
+            if (created) {
                 req.flash('success', `Quote successfully added to your favorite!`);
                 res.redirect('back');
             } else {
