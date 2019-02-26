@@ -205,10 +205,12 @@ const viewQuote = (req, res, next) => {
             ]
         },
         where: {id: id},
-        include: [Tag, User]
+        include: [Tag, User, QuoteComment],
+        order: [[QuoteComment, 'created_at', 'DESC']]
     })
         .then(quote => {
             if (quote) {
+                console.log(quote);
                 res.render('quote/view', {
                     title: quote.quote,
                     quote: quote

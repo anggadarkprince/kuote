@@ -23,6 +23,7 @@ const errorController = require('./controllers/error');
 const homeRoutes = require('./routes/home');
 const authRoutes = require('./routes/auth');
 const quoteRoutes = require('./routes/quote');
+const commentRoutes = require('./routes/comment');
 const accountRoutes = require('./routes/account');
 const db = require('./utils/database');
 
@@ -139,6 +140,7 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use(accountRoutes);
 app.use('/quotes', quoteRoutes);
+app.use(commentRoutes);
 app.use(homeRoutes);
 app.use(errorController.get404);
 app.use((error, req, res, next) => {

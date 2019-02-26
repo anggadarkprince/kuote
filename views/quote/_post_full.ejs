@@ -12,7 +12,11 @@
                 </a>&nbsp;
             <% } %>
         </h6>
-        <h4 class="title"><b><%= quote.quote %></b></h4>
+        <h4 class="title">
+            <b>
+                <a href="/quotes/<%= quote.id %>"><%= quote.quote %></a>
+            </b>
+        </h4>
         <p><%= quote.description %></p>
         <div class="avatar-area">
             <a class="avatar" href="/<%= quote.user.username %>">
