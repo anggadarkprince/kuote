@@ -34,7 +34,14 @@
         </div>
 
         <ul class="post-footer">
-            <li><a href="#"><i class="ion-heart"></i><%= quote.get('total_likes') || 0 %></a></li>
+            <li>
+                <form action="/quotes/like/<%= quote.id %>" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <a href="#" onclick="this.parentElement.submit()">
+                        <i class="ion-heart"></i><%= quote.get('total_likes') || 0 %>
+                    </a>
+                </form>
+            </li>
             <li><a href="#"><i class="ion-chatbubbles"></i><%= quote.get('total_comments') || 0 %></a></li>
             <li><a href="#"><i class="ion-eye" style="font-size: 1.3em"></i><%= quote.total_views || 0 %></a></li>
         </ul>

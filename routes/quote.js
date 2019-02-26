@@ -13,5 +13,6 @@ router.post('/', authMiddleware, quoteController.save);
 router.get('/:quoteId/edit', authMiddleware, quoteController.edit);
 router.put('/:quoteId', authMiddleware, quoteController.update);
 router.delete('/:quoteId', authMiddleware, quoteController.delete);
+router.post('/like/:quoteId', authMiddleware, quoteController.like);
 
 module.exports = router;

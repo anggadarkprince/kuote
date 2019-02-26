@@ -43,12 +43,10 @@ const postLogin = (req, res, next) => {
     let createdUser;
     User.findOne({where: condition})
         .then(user => {
-            if (!user) {
-                req.flash('error', 'User not found');
-                return res.redirect('/login');
+            if (user) {
+                createdUser = user;
+                return bcrypt.compare(password, user.password);
             }
-            createdUser = user;
-            return bcrypt.compare(password, user.password)
         })
         .then(matchedPassword => {
             if (matchedPassword) {

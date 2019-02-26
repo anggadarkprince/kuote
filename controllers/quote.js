@@ -17,6 +17,7 @@ const index = (req, res, next) => {
                 'quote.*',
                 [db.fn('COUNT', db.col('quote_likes.id')), 'total_likes'],
                 [db.fn('COUNT', db.col('quote_comments.id')), 'total_comments'],
+                [db.literal(`(SELECT COUNT(*) FROM quote_likes WHERE quote_likes.quote_id = quote.id AND quote_likes.user_id = ${req.user.id || 0})`), 'is_liked'],
             ]
         },
         where: {user_id: req.user.id},
@@ -39,7 +40,7 @@ const index = (req, res, next) => {
         });
 };
 
-const createQuote = (req, res, next) => {
+const createQuote = (req, res) => {
     res.render('quote/create', {
         title: 'Create new quote',
     });
@@ -210,7 +211,6 @@ const viewQuote = (req, res, next) => {
     })
         .then(quote => {
             if (quote) {
-                console.log(quote);
                 res.render('quote/view', {
                     title: quote.quote,
                     quote: quote
@@ -270,6 +270,27 @@ const quoteTag = (req, res, next) => {
         });
 };
 
+const likeQuote = (req, res, next) => {
+    const id = req.params.quoteId;
+    QuoteLike.findOrCreate({where: {quote_id: id, user_id: req.user.id}})
+        .spread((like, created) => {
+            if(created) {
+                req.flash('success', `Quote successfully added to your favorite!`);
+                res.redirect('back');
+            } else {
+                like.destroy()
+                    .then(result => {
+                        req.flash('warning', 'Quote removed from favorite');
+                        return res.redirect('/quotes');
+                    })
+                    .catch(err => Promise.reject(err));
+            }
+        })
+        .catch((err) => {
+            error.errorHandler(err, next);
+        });
+};
+
 module.exports = {
     index: index,
     create: createQuote,
@@ -280,4 +301,5 @@ module.exports = {
     view: viewQuote,
     popular: popularQuote,
     category: quoteTag,
+    like: likeQuote,
 };

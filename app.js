@@ -157,6 +157,7 @@ Quote.hasMany(QuoteLike);
 Quote.hasMany(QuoteComment);
 Quote.belongsTo(User);
 User.hasMany(Quote);
+User.hasMany(QuoteLike);
 
 db.sync({force: false})
     .then(result => {
