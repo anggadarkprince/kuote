@@ -6,6 +6,6 @@ const deleteFile = filePath => {
             throw (err);
         }
     })
-}
+};
 
 exports.deleteFile = deleteFile;

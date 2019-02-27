@@ -1,9 +1,0 @@
-{
-  "env": {
-    "PORT": 8080,
-    "DB_HOSTNAME": "localhost",
-    "DB_USERNAME": "root",
-    "DB_PASSWORD": "anggaari",
-    "DB_NAME": "kuote"
-  }
-}

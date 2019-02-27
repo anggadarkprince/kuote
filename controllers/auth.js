@@ -1,4 +1,8 @@
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
 const User = require('../models/user');
 const error = require('../utils/error');
 
@@ -22,9 +26,37 @@ const postRegister = (req, res, next) => {
             const user = new User({name, username, email, password: hashedPassword, cart: {items: []}});
             return user.save();
         })
-        .then(() => {
-            req.flash('success', 'You are registered!');
-            res.redirect('/login');
+        .then(user => {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.EMAIL_USERNAME,
+                    pass: process.env.EMAIL_PASSWORD
+                }
+            });
+
+            const mailOptions = {
+                from: 'Kuote App <no-reply@kuote.app>',
+                to: user.email,
+                subject: 'Kuote - Welcome aboard',
+                html: ejs.compile(fs.readFileSync(path.join(__dirname, '..', 'views', 'email', 'basic.ejs'), 'utf8'))({
+                    url: `${req.protocol}://${req.get('host')}`,
+                    title: 'You Are Registered',
+                    name: user.name,
+                    email: user.email,
+                    content: "<p>You're successfully registered</p>"
+                })
+            };
+
+            transporter.sendMail(mailOptions, function (err, info) {
+                if (err) {
+                    return Promise.reject(err);
+                }
+                else {
+                    req.flash('success', 'You are registered!');
+                    res.redirect('/login');
+                }
+            });
         })
         .catch((err) => {
             error.errorHandler(err, next);
