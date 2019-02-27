@@ -1,4 +1,5 @@
 const Op = require("sequelize/lib/operators");
+const request = require('request');
 const Quote = require('../models/quote');
 const Tag = require('../models/tag');
 const User = require('../models/user');
@@ -58,7 +59,7 @@ const profile = (req, res, next) => {
         }]
     })
         .then(user => {
-            if(user) {
+            if (user) {
                 res.render('home/profile', {
                     title: user.username,
                     user: user
@@ -103,8 +104,36 @@ const searchQuote = (req, res, next) => {
         });
 };
 
+const subscribe = (req, res, next) => {
+    const email = req.body.email;
+    request({
+        url: `https://us10.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_LIST_ID}/members`,
+        auth: {
+            'bearer': process.env.MAILCHIMP_API
+        },
+        method: "POST",
+        json: true,
+        body: {
+            "email_address": email.toLowerCase(),
+            "status": "subscribed",
+            "merge_fields": {
+                "FNAME": "No First Name",
+                "LNAME": "No Last Name"
+            }
+        }
+    }, function (error, response, body) {
+        if (!error && body.status === 'subscribed') {
+            req.flash('success', `Your email ${email.toLowerCase()} successfully subscribed!`);
+        } else {
+            req.flash('error', `Failed to subscribe email ${email.toLowerCase()}`);
+        }
+        res.redirect('/');
+    });
+};
+
 module.exports = {
     getIndex: getIndex,
     searchQuote: searchQuote,
     profile: profile,
+    subscribe: subscribe,
 };
