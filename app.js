@@ -48,6 +48,8 @@ const fileFilter = (req, file, callback) => {
 };
 
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -89,6 +91,11 @@ app.use(flash());
 
 const csrfProtection = csrf({sessionKey: 'session'});
 app.use(csrfProtection);
+
+app.use((req, res, next) => {
+    req.io = io;
+    return next();
+});
 
 app.use((req, res, next) => {
     if (!req.session.userId) {
@@ -161,8 +168,20 @@ Quote.belongsTo(User);
 User.hasMany(Quote);
 User.hasMany(QuoteLike);
 
+io.on('connection', function (socket) {
+    console.log('a user connected');
+    socket.on('disconnect', function () {
+        console.log('user disconnected');
+    });
+
+    socket.on('new-quote', function (msg) {
+        console.log('message: ' + msg);
+        io.emit('new-quote', msg);
+    });
+});
+
 db.sync({force: false})
     .then(result => {
-        app.listen(process.env.PORT || 8080);
+        http.listen(process.env.PORT || 8080);
     })
     .catch(console.log);

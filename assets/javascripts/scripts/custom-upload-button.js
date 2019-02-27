@@ -1,7 +1,6 @@
 import showAlert from "../components/alert";
 
 $(document).on('change', '.custom-file-input', function () {
-    console.log('a');
     if (this.files && this.files[0]) {
         let maxFile = $(this).data('max-size');
         if (this.files[0].size > maxFile) {

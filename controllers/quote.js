@@ -83,6 +83,9 @@ const saveQuote = (req, res, next) => {
             return Promise.all(insertQuoteTags);
         })
         .then(result => {
+            if(Math.random() < 0.2) {
+                req.io.emit('new-quote', createdQuote.quote);
+            }
             req.flash('success', `Quote from ${createdQuote.author} successfully created!`);
             res.redirect('/quotes');
         })
